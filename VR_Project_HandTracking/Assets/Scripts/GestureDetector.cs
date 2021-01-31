@@ -6,7 +6,7 @@ using System;
 
 // Gesture struct
 [System.Serializable]
-public struct Gesture
+public struct HandGesture
 {
     public string name;
     public List<Vector3> fingerDatas;
@@ -25,7 +25,7 @@ public class GestureDetector : MonoBehaviour
 
     // List that will be populated after we save some gestures
     [Header("List of Gestures")]
-    public List<Gesture> gestures;
+    public List<HandGesture> gestures;
 
     // List of bones took from the OVRSkeleton
     private List<OVRBone> fingerbones = null;
@@ -84,11 +84,11 @@ public class GestureDetector : MonoBehaviour
         if (hasStarted.Equals(true))
         {
             // start to Recognize every gesture we make
-            Gesture currentGesture = Recognize();
+            HandGesture currentGesture = Recognize();
 
             // we will associate the recognize to a boolean to see if the Gesture
             // we are going to make is one of the gesture we already saved
-            hasRecognize = !currentGesture.Equals(new Gesture());
+            hasRecognize = !currentGesture.Equals(new HandGesture());
 
             // and if the gesture is recognized
             if (hasRecognize)
@@ -119,7 +119,7 @@ public class GestureDetector : MonoBehaviour
     void Save()
     {
         // We create a new Gesture struct
-        Gesture g = new Gesture();
+        HandGesture g = new HandGesture();
 
         // givin to it a default name
         g.name = "New Gesture";
@@ -143,10 +143,10 @@ public class GestureDetector : MonoBehaviour
         gestures.Add(g);
     }
 
-    Gesture Recognize()
+    HandGesture Recognize()
     {
         // in the Update if we initialized correctly, we create a new Gesture
-        Gesture currentGesture = new Gesture();
+        HandGesture currentGesture = new HandGesture();
 
         // we set a new float of a positive infinity
         float currentMin = Mathf.Infinity;
