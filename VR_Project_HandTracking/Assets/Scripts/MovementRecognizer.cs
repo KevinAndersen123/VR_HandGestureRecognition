@@ -79,7 +79,7 @@ public class MovementRecognizer : MonoBehaviour
 
             if(result.Score > recognitionThreshold)
             {
-                OnRecognized.Invoke(result.GestureClass);
+                OnRecognized?.Invoke(result.GestureClass);
             }
         }
     }
