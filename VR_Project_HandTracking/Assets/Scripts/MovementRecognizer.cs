@@ -6,6 +6,10 @@ using System.IO;
 using UnityEngine.Events;
 public class MovementRecognizer : MonoBehaviour
 {
+    [SerializeField]
+    OVRHand m_hand;
+    public float pinchThreshold = 0.7f;
+
     private bool isMoving = false;
     public Transform movementSource;
     public float newPosThresholdDist = 0.05f;
@@ -25,25 +29,30 @@ public class MovementRecognizer : MonoBehaviour
 
     void Start()
     {
+        m_hand = GetComponent<OVRHand>();
+
         //finds all datapath that ends with xml
         string[] gestureFiles = Directory.GetFiles(Application.persistentDataPath, "*.xml");
 
-        foreach(var file in gestureFiles)
+        foreach (var file in gestureFiles)
         {
             trainingSet.Add(GestureIO.ReadGestureFromFile(file));
         }
     }
     public void StartMovement()
     {
-        if (!isMoving)
-        {
-            posList.Clear();
-            Debug.Log("S");
-            isMoving = true;
-            posList.Add(movementSource.position);
-            if (drawPrefab)
-                Destroy(Instantiate(drawPrefab, movementSource.position, Quaternion.identity), 3);
-        }
+
+        posList.Clear();
+        Debug.Log("S");
+        isMoving = true;
+        posList.Add(movementSource.position);
+        if (drawPrefab)
+            Destroy(Instantiate(drawPrefab, movementSource.position, Quaternion.identity), 3);
+    }
+
+    public void Update()
+    {
+        CheckIndexPinch();
     }
 
     public void EndMovement()
@@ -54,7 +63,7 @@ public class MovementRecognizer : MonoBehaviour
         //Creates gesture from the position list
 
         Point[] pointArray = new Point[posList.Count];
-        for (int i =0; i < posList.Count; i++)
+        for (int i = 0; i < posList.Count; i++)
         {
             Vector2 screenPoint = Camera.main.WorldToScreenPoint(posList[i]);
 
@@ -63,7 +72,7 @@ public class MovementRecognizer : MonoBehaviour
 
         Gesture newGesture = new Gesture(pointArray);
 
-        if(creationMode)
+        if (creationMode)
         {
             newGesture.Name = newGestureName;
             trainingSet.Add(newGesture);
@@ -77,7 +86,7 @@ public class MovementRecognizer : MonoBehaviour
             Result result = PointCloudRecognizer.Classify(newGesture, trainingSet.ToArray());
             Debug.Log(result.GestureClass + result.Score);
 
-            if(result.Score > recognitionThreshold)
+            if (result.Score > recognitionThreshold)
             {
                 OnRecognized?.Invoke(result.GestureClass);
             }
@@ -94,5 +103,29 @@ public class MovementRecognizer : MonoBehaviour
                 Destroy(Instantiate(drawPrefab, movementSource.position, Quaternion.identity), 3);
         }
         Debug.Log("U");
+    }
+
+    void CheckIndexPinch()
+    {
+        float pinchStrength = GetComponent<OVRHand>().GetFingerPinchStrength(OVRHand.HandFinger.Index);
+        bool isPinching = pinchStrength > pinchThreshold;
+
+        if (isPinching)
+        {
+            if (!isMoving)
+            {
+                StartMovement();
+            }
+            else
+            {
+                UpdateMovement();
+            }
+
+        }
+        else
+        {
+            EndMovement();
+        }
+
     }
 }
