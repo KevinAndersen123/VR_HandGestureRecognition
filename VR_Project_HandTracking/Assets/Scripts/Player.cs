@@ -10,8 +10,6 @@ public enum PlayerState
     Lightning,
     Axe
 }
-
-
 public class Player : MonoBehaviour
 {
     PlayerState m_state = PlayerState.Idle;
@@ -28,11 +26,17 @@ public class Player : MonoBehaviour
     [SerializeField]
     GameObject m_lightningFX;
 
+    bool shieldAlive = false;
+    public bool m_isLightningStrike = false;
+    const int shieldStartTime = 15;
+    private float m_shieldTime = shieldStartTime;
+
     private void FixedUpdate()
     {
         switch (m_state)
         {
             case PlayerState.Idle:
+                m_isLightningStrike = false;
                 break;
             case PlayerState.Drawing:
                 break;
@@ -54,11 +58,29 @@ public class Player : MonoBehaviour
         {
             m_lightningFX.SetActive(false);
         }
+
+        if (shieldAlive)
+        {
+            if (m_shieldTime > 0)
+            {
+                m_shieldTime -= Time.deltaTime;
+            }
+            else
+            {
+                m_shield.SetActive(false);
+                shieldAlive = false;
+                m_shieldTime = shieldStartTime;
+            }
+        }
     }
 
     public void Shield()
     {
-        Instantiate(m_shield, m_leftHand.transform.position, m_leftHand.transform.rotation);
+        if (!shieldAlive)
+        {
+            shieldAlive = true;
+            m_shield.SetActive(true);
+        }
         SwitchState("Idle");
     }
 
@@ -86,6 +108,17 @@ public class Player : MonoBehaviour
             case "Line":
                 m_state = PlayerState.Axe;
                 break;
+        }
+    }
+    public void LightningStrike()
+    {
+        if(m_state == PlayerState.Lightning)
+        {
+            m_isLightningStrike = true;
+        }
+        else
+        {
+            m_isLightningStrike = false;
         }
     }
 }

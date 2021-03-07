@@ -26,11 +26,10 @@ public class MovementRecognizer : MonoBehaviour
     [System.Serializable]
     public class UnityStringEvent : UnityEvent<string> { }
     public UnityStringEvent OnRecognized;
-
+    bool endOnce = false;
     void Start()
     {
         m_hand = GetComponent<OVRHand>();
-
         //finds all datapath that ends with xml
         string[] gestureFiles = Directory.GetFiles(Application.persistentDataPath, "*.xml");
 
@@ -41,7 +40,7 @@ public class MovementRecognizer : MonoBehaviour
     }
     public void StartMovement()
     {
-
+        endOnce = true;
         posList.Clear();
         Debug.Log("S");
         isMoving = true;
@@ -57,6 +56,7 @@ public class MovementRecognizer : MonoBehaviour
 
     public void EndMovement()
     {
+        endOnce = true;
         Debug.Log("E");
         isMoving = false;
 
@@ -110,7 +110,7 @@ public class MovementRecognizer : MonoBehaviour
         float pinchStrength = GetComponent<OVRHand>().GetFingerPinchStrength(OVRHand.HandFinger.Index);
         bool isPinching = pinchStrength > pinchThreshold;
 
-        if (isPinching)
+        if(isPinching)
         {
             if (!isMoving)
             {
@@ -120,12 +120,14 @@ public class MovementRecognizer : MonoBehaviour
             {
                 UpdateMovement();
             }
-
         }
         else
         {
-            EndMovement();
+            if(endOnce)
+            {
+                endOnce = false;
+                EndMovement();
+            }
         }
-
     }
 }

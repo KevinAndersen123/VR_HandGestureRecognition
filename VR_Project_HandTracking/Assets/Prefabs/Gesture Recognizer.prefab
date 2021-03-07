@@ -1,0 +1,114 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1009184616650992370
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1009184616650992908}
+  - component: {fileID: 1009184616650992371}
+  m_Layer: 0
+  m_Name: Gesture Recognizer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1009184616650992908
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1009184616650992370}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -1, z: 2.008}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1009184616650992371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1009184616650992370}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f392029c8ece0c04eb5300733730319c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  threshold: 0.05
+  skeleton: {fileID: 0}
+  gestures:
+  - name: Fist
+    fingerDatas:
+    - {x: 0.000002266374, y: -0.000005281277, z: 0.0000020674293}
+    - {x: 0.000002266374, y: -0.000005281277, z: 0.0000020674293}
+    - {x: -0.020069404, y: -0.011554705, z: -0.010494026}
+    - {x: -0.035904605, y: -0.019044606, z: -0.028128983}
+    - {x: -0.06258486, y: -0.026514595, z: -0.04514188}
+    - {x: -0.09500262, y: -0.036048654, z: -0.044756662}
+    - {x: -0.09599803, y: -0.007311871, z: -0.023554029}
+    - {x: -0.110132866, y: -0.042248428, z: -0.01928533}
+    - {x: -0.08637226, y: -0.046651423, z: -0.021860225}
+    - {x: -0.095645234, y: -0.0025469337, z: -0.0017227276}
+    - {x: -0.10623236, y: -0.04411244, z: -0.00010879481}
+    - {x: -0.0792216, y: -0.044696763, z: -0.0055000805}
+    - {x: -0.08869201, y: -0.0065328665, z: 0.017466139}
+    - {x: -0.09727185, y: -0.04455197, z: 0.016310364}
+    - {x: -0.072349854, y: -0.041551586, z: 0.007584138}
+    - {x: -0.034073234, y: -0.009420089, z: 0.02299678}
+    - {x: -0.07789741, y: -0.013688449, z: 0.03505617}
+    - {x: -0.085014924, y: -0.042921726, z: 0.028831411}
+    - {x: -0.066691905, y: -0.039888494, z: 0.020615902}
+    - {x: -0.117705345, y: -0.04531881, z: -0.042563815}
+    - {x: -0.07062708, y: -0.030969705, z: -0.024581391}
+    - {x: -0.06604174, y: -0.02413377, z: -0.010805012}
+    - {x: -0.06390297, y: -0.018891944, z: 0.0045182225}
+    - {x: -0.056732472, y: -0.020691631, z: 0.016834047}
+    onRecognized:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_MethodName: StartMovement
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 0}
+          m_MethodName: UpdateMovement
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  debugMode: 0
+  notRecognize:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: EndMovement
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
