@@ -9,7 +9,7 @@ public class LightningStrike : MonoBehaviour
 
     //info about the line renderer
     public float m_lineWidth = 0.1f;
-    public float m_lineMaxLength = 1f;
+    public float m_lineMaxLength = 5f;
 
     //bool to determine if line is eneabled or not
     public bool m_lineToggle;
@@ -68,16 +68,12 @@ public class LightningStrike : MonoBehaviour
             //update line render with new end pos
             endPos = hit.point;
             
-            //set enemy gameobj to the gameobj that the raycast hit
+            //check if hits enemy target
             if(hit.collider.gameObject.tag == "Enemy")
             {
-                m_enemy = hit.collider.gameObject;
-            }
-            //if enemy has the explode script, do something
-            if (m_enemy != null)//m_enemy.GetComponent<Enemy>())
-            {
+                Debug.Log("Hit");
                 m_enemyHit = true;
-                //m_enemy.GetComponent<Enemy>().TakeDamage();
+                hit.collider.gameObject.GetComponent<Enemy>().TakeDamage(100);
             }
             else
             {

@@ -42,7 +42,7 @@ public class MovementRecognizer : MonoBehaviour
     {
         endOnce = true;
         posList.Clear();
-        Debug.Log("S");
+        //Debug.Log("S");
         isMoving = true;
         posList.Add(movementSource.position);
         if (drawPrefab)
@@ -57,7 +57,7 @@ public class MovementRecognizer : MonoBehaviour
     public void EndMovement()
     {
         endOnce = true;
-        Debug.Log("E");
+        //Debug.Log("E");
         isMoving = false;
 
         //Creates gesture from the position list
@@ -102,7 +102,7 @@ public class MovementRecognizer : MonoBehaviour
             if (drawPrefab)
                 Destroy(Instantiate(drawPrefab, movementSource.position, Quaternion.identity), 3);
         }
-        Debug.Log("U");
+        //Debug.Log("U");
     }
 
     void CheckIndexPinch()
