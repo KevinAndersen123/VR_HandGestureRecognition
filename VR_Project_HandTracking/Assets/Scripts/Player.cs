@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum PlayerState
 { 
@@ -12,8 +13,10 @@ public enum PlayerState
 }
 public class Player : MonoBehaviour
 {
+    public float m_health = 100f;
     PlayerState m_state = PlayerState.Idle;
-
+    [SerializeField]
+    Image m_hud;
     [SerializeField]
     GameObject m_shield;
 
@@ -30,7 +33,12 @@ public class Player : MonoBehaviour
     public bool m_isLightningStrike = false;
     const int shieldStartTime = 15;
     private float m_shieldTime = shieldStartTime;
-
+    private GameManager m_manager;
+    private void Start()
+    {
+        m_manager = FindObjectOfType<GameManager>();
+        m_hud.color = Color.clear;
+    }
     private void FixedUpdate()
     {
         switch (m_state)
@@ -120,5 +128,42 @@ public class Player : MonoBehaviour
         {
             m_isLightningStrike = false;
         }
+    }
+
+    public void TakeDamage(float t_damage)
+    {
+        m_health -= t_damage;
+        Debug.Log(m_health);
+        if(m_health <= 0)
+        {
+            m_manager.m_gameover = true;
+            FindObjectOfType<LevelChanger>().FadeToLevel("Gameover");
+        }
+        UpdateHealthHUD();
+    }
+
+    private void UpdateHealthHUD()
+    {
+        if(m_health <=100 && m_health > 75)
+        {
+            m_hud.color = new Color(1, 1, 1, 0.25f);
+        }
+        else if (m_health <= 75 && m_health > 50)
+        {
+            m_hud.color = new Color(1, 1, 1, 0.5f);
+        }
+        else if (m_health <= 50 && m_health > 25)
+        {
+            m_hud.color = new Color(1, 1, 1, 0.75f);
+        }
+        else if(m_health <= 25 && m_health > 1)
+        {
+            m_hud.color = new Color(1, 1, 1, 0.9f);
+        }
+        else
+        {
+            m_hud.color = new Color(1, 1, 1, 1f);
+        }
+
     }
 }
