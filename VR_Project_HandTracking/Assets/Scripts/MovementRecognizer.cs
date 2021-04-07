@@ -50,7 +50,7 @@ public class MovementRecognizer : MonoBehaviour
     }
 
     public void Update()
-    {
+    { 
         CheckIndexPinch();
     }
 

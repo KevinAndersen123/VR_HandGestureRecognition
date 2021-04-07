@@ -26,7 +26,7 @@ public class Enemy : MonoBehaviour
 
         m_waveManager = FindObjectOfType<WaveManager>();
         Vector3 pos = GameObject.FindGameObjectWithTag("Player").transform.position;
-        m_targetPos = new Vector3(pos.x, 0.2f, pos.z);
+        m_targetPos = new Vector3(pos.x, 0.45f, pos.z);
         transform.LookAt(m_targetPos);
     }
 
@@ -34,6 +34,8 @@ public class Enemy : MonoBehaviour
     {
         if (!m_isAttacking)
         {
+            Vector3 pos = GameObject.FindGameObjectWithTag("Player").transform.position;
+            m_targetPos = new Vector3(pos.x, 0.45f, pos.z);
             transform.position = Vector3.MoveTowards(transform.position, m_targetPos, m_speed * Time.deltaTime);
         }
         else
