@@ -19,119 +19,90 @@ public class Player : MonoBehaviour
     Image m_hud;
     [SerializeField]
     GameObject m_shield;
-
-    [SerializeField]
-    GameObject m_leftHand;
-
-    [SerializeField]
-    GameObject m_rightHand;
-
     [SerializeField]
     GameObject m_lightningFX;
-
-    bool shieldAlive = false;
-    public bool m_isLightningStrike = false;
-    const int shieldStartTime = 15;
-    private float m_shieldTime = shieldStartTime;
+    ShootManager m_shootManager;
+    bool m_shieldAlive = false;
+    bool m_lightningActive = false;
+    const float SHIELD_START_TIME = 15.0f;
+    private float m_shieldTime = SHIELD_START_TIME;
     private GameManager m_manager;
     private void Start()
     {
         m_manager = FindObjectOfType<GameManager>();
+        m_shootManager = FindObjectOfType<ShootManager>();
         m_hud.color = Color.clear;
+        m_lightningFX.SetActive(false);
     }
     private void FixedUpdate()
     {
-        switch (m_state)
+        if (m_shieldAlive)
         {
-            case PlayerState.Idle:
-                m_isLightningStrike = false;
-                break;
-            case PlayerState.Drawing:
-                break;
-            case PlayerState.Shield:
-                Shield();
-                break;
-            case PlayerState.Lightning:
-                Lightning();
-                break;
-            case PlayerState.Axe:
-                break;
-        }
-
-        if(m_state == PlayerState.Lightning)
-        {
-            m_lightningFX.SetActive(true);
-        }
-        else
-        {
-            m_lightningFX.SetActive(false);
-        }
-
-        if (shieldAlive)
-        {
-            if (m_shieldTime > 0)
+            if (m_shieldTime >= 0f)
             {
                 m_shieldTime -= Time.deltaTime;
             }
             else
             {
                 m_shield.SetActive(false);
-                shieldAlive = false;
-                m_shieldTime = shieldStartTime;
+                m_shieldAlive = false;
+                m_shieldTime = SHIELD_START_TIME;
             }
         }
     }
 
     public void Shield()
     {
-        if (!shieldAlive)
+        if (!m_shieldAlive)
         {
-            shieldAlive = true;
+            m_shieldAlive = true;
             m_shield.SetActive(true);
         }
         SwitchState("Idle");
     }
 
-    public void Lightning()
+    public void ShootLightning()
     {
-        m_lightningFX.SetActive(true);
+        if (m_state == PlayerState.Lightning)
+        {
+            m_shootManager.OnShoot();
+        }
     }
-
     public void SwitchState(string t_state)
     {
         switch (t_state)
         {
             case "Idle":
                 m_state = PlayerState.Idle;
+                m_shootManager.StopShoot();
+                m_lightningFX.SetActive(false);
+                m_lightningActive = false;
                 break;
             case "Draw":
                 m_state = PlayerState.Drawing;
                 break;
             case "Circle":
                 m_state = PlayerState.Shield;
+                Shield();
                 break;
             case "Lightning":
                 m_state = PlayerState.Lightning;
+                m_lightningFX.SetActive(true);
+                if(!m_lightningActive)
+                {
+                    FindObjectOfType<AudioManager>().Play("Thunder");
+                }
+                m_lightningActive = true;
                 break;
             case "Line":
                 m_state = PlayerState.Axe;
                 break;
         }
     }
-    public void LightningStrike()
-    {
-        if(m_state == PlayerState.Lightning)
-        {
-            m_isLightningStrike = true;
-        }
-        else
-        {
-            m_isLightningStrike = false;
-        }
-    }
 
     public void TakeDamage(float t_damage)
     {
+        FindObjectOfType<AudioManager>().Play("Player_Hurt");
         m_health -= t_damage;
         Debug.Log(m_health);
         if(m_health <= 0)

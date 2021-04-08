@@ -1,16 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
     public int m_health = 100;
-
+    public Slider m_healthBar;
+    public Text m_healthText;
     private Vector3 m_targetPos;
     [SerializeField]
     private float m_speed = 3.0f;
     //private float deathTimer;
     private WaveManager m_waveManager;
+
     [SerializeField]
     GameObject m_bloodParticlePrefab;
 
@@ -32,6 +35,8 @@ public class Enemy : MonoBehaviour
 
     public void FixedUpdate()
     {
+        m_healthBar.value = m_health;
+        m_healthText.text = m_health + "/100";
         if (!m_isAttacking)
         {
             Vector3 pos = GameObject.FindGameObjectWithTag("Player").transform.position;
@@ -45,23 +50,13 @@ public class Enemy : MonoBehaviour
     }
     public void TakeDamage(int t_val)
     {
-        GetComponent<SpriteRenderer>().color = Color.red;
         m_health -= t_val;
         if(m_health <= 0)
         {
             Debug.Log("HIT ENEMY!");
             Die();
         }
-        GetComponent<SpriteRenderer>().color = Color.white;
     }
-
-    //public void OnTriggerStay(Collider other)
-    //{
-    //    if (other.tag == "Player")
-    //    {
-    //        StartCoroutine(Attack());
-    //    }
-    //}
 
     public void OnTriggerEnter(Collider other)
     {
@@ -69,6 +64,18 @@ public class Enemy : MonoBehaviour
         {
             m_isAttacking = true;
             anim.SetInteger("Condition", 0);
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Lightning")
+        {
+            TakeDamage((int)collision.gameObject.GetComponent<LightningBolt>().m_damage);
+        }
+        if (collision.gameObject.tag == "Hand")
+        {
+            TakeDamage(100);
         }
     }
     public void Die()
@@ -80,6 +87,8 @@ public class Enemy : MonoBehaviour
         setColliderState(true);
         if (gameObject != null)
         {
+            FindObjectOfType<AudioManager>().Play("Enemy_Hurt");
+            FindObjectOfType<AudioManager>().Play("Blood");
             FindObjectOfType<WaveManager>().EnemyDied();
             Instantiate(m_bloodParticlePrefab, transform);
             Destroy(gameObject, 3f);
@@ -114,7 +123,7 @@ public class Enemy : MonoBehaviour
     IEnumerator Attack()
     {
         anim.SetInteger("Condition", 2);
-        FindObjectOfType<Player>().TakeDamage(0.05f);
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(2.0f);
+        anim.SetInteger("Condition", 0);
     }
 }

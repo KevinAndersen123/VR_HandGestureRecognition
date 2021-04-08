@@ -37,13 +37,12 @@ public class WaveManager : MonoBehaviour
         m_enemiesInWave = m_enemyIncreaseFactor * m_currentWave; // may change
         m_enemiesToSpawn = m_enemiesInWave;
         GetComponent<WaveUI>().UpdateUI(m_currentWave, m_enemiesInWave);
-
         StartCoroutine(Spawn());
     }
 
     IEnumerator Spawn()
     {
-        for(int i =0; i < m_enemiesToSpawn; i++)
+        for (int i =0; i < m_enemiesToSpawn; i++)
         {
             if(GetComponent<GameManager>().m_gameover)
             {

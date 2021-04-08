@@ -46,7 +46,7 @@ MonoBehaviour:
   m_sounds:
   - m_name: Main_BG
     m_clip: {fileID: 8300000, guid: 24d844ae3c55fc04e952e4b662ed7c9a, type: 3}
-    m_volume: 0.2
+    m_volume: 0.7
     m_volumeVariance: 0
     m_pitch: 1
     m_pitchVariance: 0
@@ -73,59 +73,41 @@ MonoBehaviour:
     m_source: {fileID: 0}
   - m_name: Gameplay_BG
     m_clip: {fileID: 8300000, guid: 805619bdd1b104341815acb9cfde3451, type: 3}
-    m_volume: 0.2
+    m_volume: 0.75
     m_volumeVariance: 0
     m_pitch: 1
     m_pitchVariance: 0
     m_loop: 1
     m_mixerGroup: {fileID: 24300002, guid: 5129e45b23397fb4a8d8ba037c97154c, type: 2}
     m_source: {fileID: 0}
-  - m_name: Player_Hit
-    m_clip: {fileID: 0}
-    m_volume: 1
-    m_volumeVariance: 0
-    m_pitch: 1
-    m_pitchVariance: 0
-    m_loop: 0
-    m_mixerGroup: {fileID: 24300002, guid: 5129e45b23397fb4a8d8ba037c97154c, type: 2}
-    m_source: {fileID: 0}
   - m_name: Player_Hurt
-    m_clip: {fileID: 0}
-    m_volume: 1
+    m_clip: {fileID: 8300000, guid: db7f938e50a708842a1c55ba9e37dcb1, type: 3}
+    m_volume: 0.6
     m_volumeVariance: 0
     m_pitch: 1
     m_pitchVariance: 0
     m_loop: 0
     m_mixerGroup: {fileID: 24300002, guid: 5129e45b23397fb4a8d8ba037c97154c, type: 2}
     m_source: {fileID: 0}
-  - m_name: Ememy_Hit
-    m_clip: {fileID: 0}
-    m_volume: 1
+  - m_name: Enemy_Hurt
+    m_clip: {fileID: 8300000, guid: 791ce1a7f6adf90409626b13cda3eab4, type: 3}
+    m_volume: 0.5
     m_volumeVariance: 0
     m_pitch: 1
     m_pitchVariance: 0
     m_loop: 0
     m_mixerGroup: {fileID: 24300002, guid: 5129e45b23397fb4a8d8ba037c97154c, type: 2}
     m_source: {fileID: 0}
-  - m_name: Ememy_Hurt
-    m_clip: {fileID: 0}
-    m_volume: 1
+  - m_name: Thunder
+    m_clip: {fileID: 8300000, guid: 1f0122f7a50779e4d9e0f5fd2ebccfcd, type: 3}
+    m_volume: 0.4
     m_volumeVariance: 0
     m_pitch: 1
     m_pitchVariance: 0
     m_loop: 0
     m_mixerGroup: {fileID: 24300002, guid: 5129e45b23397fb4a8d8ba037c97154c, type: 2}
     m_source: {fileID: 0}
-  - m_name: Lightning
-    m_clip: {fileID: 0}
-    m_volume: 1
-    m_volumeVariance: 0
-    m_pitch: 1
-    m_pitchVariance: 0
-    m_loop: 0
-    m_mixerGroup: {fileID: 24300002, guid: 5129e45b23397fb4a8d8ba037c97154c, type: 2}
-    m_source: {fileID: 0}
-  - m_name: Lightning Strike
+  - m_name: Lightning_Strike
     m_clip: {fileID: 0}
     m_volume: 1
     m_volumeVariance: 0
@@ -152,9 +134,9 @@ MonoBehaviour:
     m_loop: 0
     m_mixerGroup: {fileID: 24300002, guid: 5129e45b23397fb4a8d8ba037c97154c, type: 2}
     m_source: {fileID: 0}
-  - m_name: 
-    m_clip: {fileID: 0}
-    m_volume: 1
+  - m_name: Blood
+    m_clip: {fileID: 8300000, guid: 8708b034062e2d74bbd94bf99a1c829d, type: 3}
+    m_volume: 0.5
     m_volumeVariance: 0
     m_pitch: 1
     m_pitchVariance: 0

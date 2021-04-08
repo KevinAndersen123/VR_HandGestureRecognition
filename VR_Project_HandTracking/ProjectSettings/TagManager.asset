@@ -4,9 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - LeftHand
-  - RightHand
   - Enemy
+  - Hand
+  - RightHand
+  - LeftHand
+  - Lightning
   layers:
   - Default
   - TransparentFX
@@ -16,7 +18,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - Enemy
   - 
   - 
   - 

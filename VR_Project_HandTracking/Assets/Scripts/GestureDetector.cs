@@ -59,7 +59,7 @@ public class GestureDetector : MonoBehaviour
 
     public void Initialize()
     {
-        // Check the function for know what it does
+        // Check the function for know what it doesW
         SetSkeleton();
 
         // After initialize the skeleton set a boolean to true to confirm the initialization
