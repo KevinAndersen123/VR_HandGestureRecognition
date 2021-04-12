@@ -124,6 +124,6 @@ public class Enemy : MonoBehaviour
     {
         anim.SetInteger("Condition", 2);
         yield return new WaitForSeconds(2.0f);
-        anim.SetInteger("Condition", 0);
+        FindObjectOfType<Player>().TakeDamage(0.05f);
     }
 }
