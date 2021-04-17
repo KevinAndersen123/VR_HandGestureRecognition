@@ -81,7 +81,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_speed: 25
   m_fireRate: 1
-  m_damage: 100
+  m_damage: 50
   m_timeBeforeDestroyed: 5
 --- !u!96 &3655580979709472209
 TrailRenderer:

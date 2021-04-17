@@ -41,6 +41,7 @@ public class Enemy : MonoBehaviour
         {
             Vector3 pos = GameObject.FindGameObjectWithTag("Player").transform.position;
             m_targetPos = new Vector3(pos.x, 0.45f, pos.z);
+            transform.LookAt(m_targetPos);
             transform.position = Vector3.MoveTowards(transform.position, m_targetPos, m_speed * Time.deltaTime);
         }
         else
@@ -73,7 +74,7 @@ public class Enemy : MonoBehaviour
         {
             TakeDamage((int)collision.gameObject.GetComponent<LightningBolt>().m_damage);
         }
-        if (collision.gameObject.tag == "Hand")
+        if (collision.gameObject.tag == "Axe")
         {
             TakeDamage(100);
         }
@@ -124,6 +125,5 @@ public class Enemy : MonoBehaviour
     {
         anim.SetInteger("Condition", 2);
         yield return new WaitForSeconds(2.0f);
-        FindObjectOfType<Player>().TakeDamage(0.05f);
     }
 }

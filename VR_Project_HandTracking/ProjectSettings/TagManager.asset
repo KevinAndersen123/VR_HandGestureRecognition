@@ -9,6 +9,8 @@ TagManager:
   - RightHand
   - LeftHand
   - Lightning
+  - Axe
+  - EnemyWeapon
   layers:
   - Default
   - TransparentFX

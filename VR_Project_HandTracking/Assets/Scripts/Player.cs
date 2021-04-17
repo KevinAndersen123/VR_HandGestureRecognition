@@ -19,13 +19,16 @@ public class Player : MonoBehaviour
     Image m_hud;
     [SerializeField]
     GameObject m_shield;
+
+    [SerializeField]
+    GameObject m_axe;
+
     [SerializeField]
     GameObject m_lightningFX;
+
     ShootManager m_shootManager;
     bool m_shieldAlive = false;
     bool m_lightningActive = false;
-    const float SHIELD_START_TIME = 15.0f;
-    private float m_shieldTime = SHIELD_START_TIME;
     private GameManager m_manager;
     private void Start()
     {
@@ -34,31 +37,19 @@ public class Player : MonoBehaviour
         m_hud.color = Color.clear;
         m_lightningFX.SetActive(false);
     }
-    private void FixedUpdate()
-    {
-        if (m_shieldAlive)
-        {
-            if (m_shieldTime >= 0f)
-            {
-                m_shieldTime -= Time.deltaTime;
-            }
-            else
-            {
-                m_shield.SetActive(false);
-                m_shieldAlive = false;
-                m_shieldTime = SHIELD_START_TIME;
-            }
-        }
-    }
 
-    public void Shield()
+    public void ToggleShield()
     {
         if (!m_shieldAlive)
         {
             m_shieldAlive = true;
             m_shield.SetActive(true);
         }
-        SwitchState("Idle");
+        else
+        {
+            m_shieldAlive = false;
+            m_shield.SetActive(false);
+        }
     }
 
     public void ShootLightning()
@@ -77,29 +68,33 @@ public class Player : MonoBehaviour
                 m_shootManager.StopShoot();
                 m_lightningFX.SetActive(false);
                 m_lightningActive = false;
+                m_axe.SetActive(false);
                 break;
             case "Draw":
                 m_state = PlayerState.Drawing;
                 break;
             case "Circle":
                 m_state = PlayerState.Shield;
-                Shield();
+                ToggleShield();
                 break;
             case "Lightning":
                 m_state = PlayerState.Lightning;
                 m_lightningFX.SetActive(true);
-                if(!m_lightningActive)
+                if (!m_lightningActive)
                 {
                     FindObjectOfType<AudioManager>().Play("Thunder");
                 }
                 m_lightningActive = true;
                 break;
-            case "Line":
-                m_state = PlayerState.Axe;
+            default:
                 break;
         }
     }
 
+    public void Axe()
+    {
+        m_axe.SetActive(true);
+    }
     public void TakeDamage(float t_damage)
     {
         FindObjectOfType<AudioManager>().Play("Player_Hurt");
@@ -136,5 +131,13 @@ public class Player : MonoBehaviour
             m_hud.color = new Color(1, 1, 1, 1f);
         }
 
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "EnemyWeapon")
+        {
+            TakeDamage(10);
+        }
     }
 }
