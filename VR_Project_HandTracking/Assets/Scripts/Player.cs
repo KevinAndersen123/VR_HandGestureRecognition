@@ -13,7 +13,9 @@ public enum PlayerState
 }
 public class Player : MonoBehaviour
 {
-    public float m_health = 100f;
+    private int m_maxHealth = 100;
+    public float m_health = 100;
+    bool isRegenHealth;
     PlayerState m_state = PlayerState.Idle;
     [SerializeField]
     Image m_hud;
@@ -27,31 +29,25 @@ public class Player : MonoBehaviour
     GameObject m_lightningFX;
 
     ShootManager m_shootManager;
-    bool m_shieldAlive = false;
     bool m_lightningActive = false;
     private GameManager m_manager;
+
     private void Start()
     {
         m_manager = FindObjectOfType<GameManager>();
         m_shootManager = FindObjectOfType<ShootManager>();
         m_hud.color = Color.clear;
         m_lightningFX.SetActive(false);
+        m_health = m_maxHealth;
     }
 
-    public void ToggleShield()
+    void Update()
     {
-        if (!m_shieldAlive)
+        if (m_health != m_maxHealth && !isRegenHealth)
         {
-            m_shieldAlive = true;
-            m_shield.SetActive(true);
-        }
-        else
-        {
-            m_shieldAlive = false;
-            m_shield.SetActive(false);
+            StartCoroutine(RegainHealthOverTime());
         }
     }
-
     public void ShootLightning()
     {
         if (m_state == PlayerState.Lightning)
@@ -65,6 +61,7 @@ public class Player : MonoBehaviour
         {
             case "Idle":
                 m_state = PlayerState.Idle;
+                m_shield.SetActive(false);
                 m_shootManager.StopShoot();
                 m_lightningFX.SetActive(false);
                 m_lightningActive = false;
@@ -75,7 +72,7 @@ public class Player : MonoBehaviour
                 break;
             case "Circle":
                 m_state = PlayerState.Shield;
-                ToggleShield();
+                m_shield.SetActive(true);
                 break;
             case "Lightning":
                 m_state = PlayerState.Lightning;
@@ -85,6 +82,9 @@ public class Player : MonoBehaviour
                     FindObjectOfType<AudioManager>().Play("Thunder");
                 }
                 m_lightningActive = true;
+                break;
+            case "Line":
+                SwitchState("Idle");
                 break;
             default:
                 break;
@@ -110,34 +110,22 @@ public class Player : MonoBehaviour
 
     private void UpdateHealthHUD()
     {
-        if(m_health <=100 && m_health > 75)
-        {
-            m_hud.color = new Color(1, 1, 1, 0.25f);
-        }
-        else if (m_health <= 75 && m_health > 50)
-        {
-            m_hud.color = new Color(1, 1, 1, 0.5f);
-        }
-        else if (m_health <= 50 && m_health > 25)
-        {
-            m_hud.color = new Color(1, 1, 1, 0.75f);
-        }
-        else if(m_health <= 25 && m_health > 1)
-        {
-            m_hud.color = new Color(1, 1, 1, 0.9f);
-        }
-        else
-        {
-            m_hud.color = new Color(1, 1, 1, 1f);
-        }
-
+        m_hud.color = new Color(1, 1, 1, (100 - m_health) / 100.0f);
     }
 
-    void OnTriggerEnter(Collider other)
+    public void Healthregen()
     {
-        if(other.tag == "EnemyWeapon")
+        m_health++;
+        UpdateHealthHUD();
+    }
+    private IEnumerator RegainHealthOverTime()
+    {
+        isRegenHealth = true;
+        while (m_health < m_maxHealth)
         {
-            TakeDamage(10);
+            Healthregen();
+            yield return new WaitForSeconds(1);
         }
+        isRegenHealth = false;
     }
 }

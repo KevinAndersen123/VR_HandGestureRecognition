@@ -19,6 +19,8 @@ public class Enemy : MonoBehaviour
 
     Animator anim;
     private bool m_isAttacking = false;
+
+    private bool m_isDead = false;
     private void Start()
     {
         anim = GetComponent<Animator>();
@@ -28,25 +30,34 @@ public class Enemy : MonoBehaviour
         GetComponent<Animator>().enabled = true;
 
         m_waveManager = FindObjectOfType<WaveManager>();
-        Vector3 pos = GameObject.FindGameObjectWithTag("Player").transform.position;
+        Vector3 pos = GameObject.FindGameObjectWithTag("MainCamera").transform.position;
         m_targetPos = new Vector3(pos.x, 0.45f, pos.z);
         transform.LookAt(m_targetPos);
     }
 
     public void FixedUpdate()
     {
+        if(m_waveManager.GetCurrentWave() > 4 && m_waveManager.GetCurrentWave() < 10)
+        {
+            m_speed = 4.0f;
+        }
+        else if(m_waveManager.GetCurrentWave() > 10)
+        {
+            m_speed = 6.0f;
+        }
         m_healthBar.value = m_health;
         m_healthText.text = m_health + "/100";
-        if (!m_isAttacking)
+        if (!m_isAttacking && !m_isDead)
         {
-            Vector3 pos = GameObject.FindGameObjectWithTag("Player").transform.position;
+            Vector3 pos = GameObject.FindGameObjectWithTag("MainCamera").transform.position;
             m_targetPos = new Vector3(pos.x, 0.45f, pos.z);
             transform.LookAt(m_targetPos);
             transform.position = Vector3.MoveTowards(transform.position, m_targetPos, m_speed * Time.deltaTime);
         }
         else
         {
-            StartCoroutine(Attack());
+            if(!m_isDead)
+                StartCoroutine(Attack());
         }
     }
     public void TakeDamage(int t_val)
@@ -61,7 +72,7 @@ public class Enemy : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "MainCamera")
         {
             m_isAttacking = true;
             anim.SetInteger("Condition", 0);
@@ -81,6 +92,7 @@ public class Enemy : MonoBehaviour
     }
     public void Die()
     {
+        m_isDead = true;
         m_isAttacking = false;
         anim.SetInteger("Condition", 0);
         GetComponent<Animator>().enabled = false;
@@ -89,10 +101,10 @@ public class Enemy : MonoBehaviour
         if (gameObject != null)
         {
             FindObjectOfType<AudioManager>().Play("Enemy_Hurt");
-            FindObjectOfType<AudioManager>().Play("Blood");
             FindObjectOfType<WaveManager>().EnemyDied();
-            Instantiate(m_bloodParticlePrefab, transform);
             Destroy(gameObject, 3f);
+            Instantiate(m_bloodParticlePrefab, transform);
+            FindObjectOfType<AudioManager>().Play("Blood");
         }
     }
 
@@ -125,5 +137,6 @@ public class Enemy : MonoBehaviour
     {
         anim.SetInteger("Condition", 2);
         yield return new WaitForSeconds(2.0f);
+        FindObjectOfType<Player>().TakeDamage(0.01f);
     }
 }

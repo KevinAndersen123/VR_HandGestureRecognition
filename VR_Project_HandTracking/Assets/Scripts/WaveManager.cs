@@ -33,7 +33,14 @@ public class WaveManager : MonoBehaviour
     public void StartWave()
     {
         m_currentWave++;
-
+        if(m_currentWave > 5)
+        {
+            m_spawnDelay = 8;
+        }
+        if (m_currentWave > 10)
+        {
+            m_spawnDelay = 5;
+        }
         m_enemiesInWave = m_enemyIncreaseFactor * m_currentWave; // may change
         m_enemiesToSpawn = m_enemiesInWave;
         GetComponent<WaveUI>().UpdateUI(m_currentWave, m_enemiesInWave);
@@ -72,5 +79,10 @@ public class WaveManager : MonoBehaviour
     public Vector3 GetRandownSpawner()
     {
         return m_spawners[Random.Range(0, m_spawners.Count)].transform.position;
+    }
+
+    public int GetCurrentWave()
+    {
+        return m_currentWave;
     }
 }
