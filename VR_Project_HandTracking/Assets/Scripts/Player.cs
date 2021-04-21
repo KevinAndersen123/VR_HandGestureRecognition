@@ -21,7 +21,8 @@ public class Player : MonoBehaviour
     Image m_hud;
     [SerializeField]
     GameObject m_shield;
-
+    [SerializeField]
+    public GameObject m_forcefield;
     [SerializeField]
     GameObject m_axe;
 
@@ -31,6 +32,9 @@ public class Player : MonoBehaviour
     ShootManager m_shootManager;
     bool m_lightningActive = false;
     private GameManager m_manager;
+
+    const int shieldStartTime = 20;
+    private float m_shieldTime = shieldStartTime;
 
     private void Start()
     {
@@ -47,6 +51,32 @@ public class Player : MonoBehaviour
         {
             StartCoroutine(RegainHealthOverTime());
         }
+
+        if(m_shield.activeSelf)
+        {
+            GetComponent<CapsuleCollider>().radius = 0.1f;
+            m_forcefield.SetActive(true);
+        }
+        else
+        {
+            GetComponent<CapsuleCollider>().radius = 1f;
+            m_forcefield.SetActive(false);
+        }
+
+        if (m_shield.activeSelf)
+        {
+            if (m_shieldTime > 0)
+            {
+                m_shieldTime -= Time.deltaTime;
+            }
+            else
+            {
+                m_shieldTime = shieldStartTime;
+                SwitchState("Idle");
+            }
+        }
+
+        m_shield.GetComponentInChildren<Text>().text = m_shieldTime.ToString();
     }
     public void ShootLightning()
     {
@@ -66,13 +96,19 @@ public class Player : MonoBehaviour
                 m_lightningFX.SetActive(false);
                 m_lightningActive = false;
                 m_axe.SetActive(false);
-                break;
-            case "Draw":
-                m_state = PlayerState.Drawing;
+                FindObjectOfType<AudioManager>().Stop("Wind");
+                FindObjectOfType<AudioManager>().Stop("Lightning");
+                m_shieldTime = shieldStartTime;
                 break;
             case "Circle":
                 m_state = PlayerState.Shield;
+                if (!m_shield.activeSelf)
+                {
+                    FindObjectOfType<AudioManager>().Play("Wind");
+                    FindObjectOfType<AudioManager>().Play("Lightning");
+                }
                 m_shield.SetActive(true);
+                m_forcefield.SetActive(true);
                 break;
             case "Lightning":
                 m_state = PlayerState.Lightning;
@@ -95,11 +131,11 @@ public class Player : MonoBehaviour
     {
         m_axe.SetActive(true);
     }
+
     public void TakeDamage(float t_damage)
     {
         FindObjectOfType<AudioManager>().Play("Player_Hurt");
         m_health -= t_damage;
-        Debug.Log(m_health);
         if(m_health <= 0)
         {
             m_manager.m_gameover = true;

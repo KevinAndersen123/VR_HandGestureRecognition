@@ -7,12 +7,12 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: mat_vfx-inf_particle_spritesheet_glowBubbles-addSoft-[1.0]
-  m_Shader: {fileID: 202, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 5
+  m_Name: HexgonSphereMat
+  m_Shader: {fileID: 4800000, guid: f56c26a8cea318848893b1f7c65265fa, type: 3}
+  m_ShaderKeywords: F_OFF
+  m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
+  m_DoubleSidedGI: 1
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
@@ -40,8 +40,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 80cf51cca8f14b1498a259d7257dae01, type: 3}
-        m_Scale: {x: 1, y: 1}
+        m_Texture: {fileID: 2800000, guid: 511656224960a9945857acc576171428, type: 3}
+        m_Scale: {x: 2, y: 3}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
@@ -56,20 +56,56 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - F: 0
+    - _Alpha: 1.04
     - _BumpScale: 1
+    - _ChromaticAberration: 0.3
+    - _CullOff: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
+    - _Distort: 100
     - _DstBlend: 0
+    - _Float1: 2
+    - _Float2: 3
+    - _Fresnel: 8
+    - _FresnelIntensity: 61
+    - _FresnelWidth: 0.32
+    - _GlossMapScale: 1
     - _Glossiness: 0.5
-    - _InvFade: 1
+    - _GlossyReflections: 1
+    - _Hold: 2
+    - _IntersectionThreshold: 0.37
+    - _MaskClipValue: -1.4
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
+    - _Offset: 0
+    - _Op: 0
     - _Parallax: 0.02
+    - _Range: 0.2
+    - _RimPower: 51
+    - _RimWidth: 0.82
+    - _ScrollSpeed: 2
+    - _ScrollSpeedU: 0
+    - _ScrollSpeedV: 2
+    - _SmoothnessTextureChannel: 0
+    - _SpecularHighlights: 1
     - _SrcBlend: 1
+    - _Transform: 0
     - _UVSec: 0
     - _ZWrite: 1
+    - __dirty: 1
+    - _fr: 2.22
+    - _intersect: 0.3
+    - _node_6584: 0.8
+    - _x: 0.063
+    - _y: 0.122
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.8, g: 0.8, b: 0.8, a: 1}
+    - _Color0: {r: 1, g: 0, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _TintColor: {r: 1, g: 1, b: 1, a: 1}
+    - _MainColor: {r: 0, g: 0.4666667, b: 1, a: 1}
+    - _intersectColor: {r: 1, g: 0, b: 0, a: 1}
+    - _node_4016: {r: 0.034482475, g: 0, b: 1, a: 1}
+    - _node_5050: {r: 0, g: 0, b: 0, a: 0}
+    - _node_6799: {r: 0.5, g: 0.5, b: 0.5, a: 1}

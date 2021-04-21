@@ -11,6 +11,7 @@ TagManager:
   - Lightning
   - Axe
   - EnemyWeapon
+  - Shield
   layers:
   - Default
   - TransparentFX

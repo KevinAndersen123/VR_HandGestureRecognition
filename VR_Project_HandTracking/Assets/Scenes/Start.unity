@@ -5428,6 +5428,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioManager
       objectReference: {fileID: 0}
+    - target: {fileID: 370024816888408023, guid: b69d90fbcaf572748bd0ab3a3118dad9,
+        type: 3}
+      propertyPath: m_sounds.Array.data[6].m_name
+      value: Wind
+      objectReference: {fileID: 0}
     - target: {fileID: 7814608368321390648, guid: b69d90fbcaf572748bd0ab3a3118dad9,
         type: 3}
       propertyPath: m_LocalPosition.x

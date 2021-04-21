@@ -35,11 +35,11 @@ public class WaveManager : MonoBehaviour
         m_currentWave++;
         if(m_currentWave > 5)
         {
-            m_spawnDelay = 8;
+            m_spawnDelay = 5;
         }
         if (m_currentWave > 10)
         {
-            m_spawnDelay = 5;
+            m_spawnDelay = 3;
         }
         m_enemiesInWave = m_enemyIncreaseFactor * m_currentWave; // may change
         m_enemiesToSpawn = m_enemiesInWave;

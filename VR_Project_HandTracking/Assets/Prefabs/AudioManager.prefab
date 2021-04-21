@@ -53,24 +53,6 @@ MonoBehaviour:
     m_loop: 1
     m_mixerGroup: {fileID: 24300002, guid: 5129e45b23397fb4a8d8ba037c97154c, type: 2}
     m_source: {fileID: 0}
-  - m_name: Voice
-    m_clip: {fileID: 0}
-    m_volume: 1
-    m_volumeVariance: 0
-    m_pitch: 1
-    m_pitchVariance: 0
-    m_loop: 0
-    m_mixerGroup: {fileID: 24300002, guid: 5129e45b23397fb4a8d8ba037c97154c, type: 2}
-    m_source: {fileID: 0}
-  - m_name: Ocean
-    m_clip: {fileID: 0}
-    m_volume: 1
-    m_volumeVariance: 0
-    m_pitch: 1
-    m_pitchVariance: 0
-    m_loop: 0
-    m_mixerGroup: {fileID: 24300002, guid: 5129e45b23397fb4a8d8ba037c97154c, type: 2}
-    m_source: {fileID: 0}
   - m_name: Gameplay_BG
     m_clip: {fileID: 8300000, guid: 805619bdd1b104341815acb9cfde3451, type: 3}
     m_volume: 0.75
@@ -107,27 +89,18 @@ MonoBehaviour:
     m_loop: 0
     m_mixerGroup: {fileID: 24300002, guid: 5129e45b23397fb4a8d8ba037c97154c, type: 2}
     m_source: {fileID: 0}
-  - m_name: Lightning_Strike
-    m_clip: {fileID: 0}
-    m_volume: 1
+  - m_name: Lightning
+    m_clip: {fileID: 8300000, guid: 5fe008e5e042bb6409ad714bdf1ce805, type: 3}
+    m_volume: 0.5
     m_volumeVariance: 0
     m_pitch: 1
     m_pitchVariance: 0
     m_loop: 0
     m_mixerGroup: {fileID: 24300002, guid: 5129e45b23397fb4a8d8ba037c97154c, type: 2}
     m_source: {fileID: 0}
-  - m_name: Shield Spawn
-    m_clip: {fileID: 0}
-    m_volume: 1
-    m_volumeVariance: 0
-    m_pitch: 1
-    m_pitchVariance: 0
-    m_loop: 0
-    m_mixerGroup: {fileID: 24300002, guid: 5129e45b23397fb4a8d8ba037c97154c, type: 2}
-    m_source: {fileID: 0}
-  - m_name: Shield_Hit
-    m_clip: {fileID: 0}
-    m_volume: 1
+  - m_name: Wind
+    m_clip: {fileID: 8300000, guid: 165eda5fb56fb4e48bc4ed0aba13c833, type: 3}
+    m_volume: 0.6
     m_volumeVariance: 0
     m_pitch: 1
     m_pitchVariance: 0
@@ -137,24 +110,6 @@ MonoBehaviour:
   - m_name: Blood
     m_clip: {fileID: 8300000, guid: 8708b034062e2d74bbd94bf99a1c829d, type: 3}
     m_volume: 0.5
-    m_volumeVariance: 0
-    m_pitch: 1
-    m_pitchVariance: 0
-    m_loop: 0
-    m_mixerGroup: {fileID: 24300002, guid: 5129e45b23397fb4a8d8ba037c97154c, type: 2}
-    m_source: {fileID: 0}
-  - m_name: 
-    m_clip: {fileID: 0}
-    m_volume: 1
-    m_volumeVariance: 0
-    m_pitch: 1
-    m_pitchVariance: 0
-    m_loop: 0
-    m_mixerGroup: {fileID: 24300002, guid: 5129e45b23397fb4a8d8ba037c97154c, type: 2}
-    m_source: {fileID: 0}
-  - m_name: 
-    m_clip: {fileID: 0}
-    m_volume: 1
     m_volumeVariance: 0
     m_pitch: 1
     m_pitchVariance: 0

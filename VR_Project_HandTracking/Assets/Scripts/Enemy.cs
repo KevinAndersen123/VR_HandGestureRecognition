@@ -21,6 +21,7 @@ public class Enemy : MonoBehaviour
     private bool m_isAttacking = false;
 
     private bool m_isDead = false;
+
     private void Start()
     {
         anim = GetComponent<Animator>();
@@ -33,20 +34,21 @@ public class Enemy : MonoBehaviour
         Vector3 pos = GameObject.FindGameObjectWithTag("MainCamera").transform.position;
         m_targetPos = new Vector3(pos.x, 0.45f, pos.z);
         transform.LookAt(m_targetPos);
+        if (m_waveManager.GetCurrentWave() > 4 && m_waveManager.GetCurrentWave() < 10)
+        {
+            m_speed = 2f;
+        }
+        else if (m_waveManager.GetCurrentWave() > 10)
+        {
+            m_speed = 4.0f;
+        }
     }
 
     public void FixedUpdate()
     {
-        if(m_waveManager.GetCurrentWave() > 4 && m_waveManager.GetCurrentWave() < 10)
-        {
-            m_speed = 4.0f;
-        }
-        else if(m_waveManager.GetCurrentWave() > 10)
-        {
-            m_speed = 6.0f;
-        }
         m_healthBar.value = m_health;
         m_healthText.text = m_health + "/100";
+
         if (!m_isAttacking && !m_isDead)
         {
             Vector3 pos = GameObject.FindGameObjectWithTag("MainCamera").transform.position;
@@ -54,10 +56,11 @@ public class Enemy : MonoBehaviour
             transform.LookAt(m_targetPos);
             transform.position = Vector3.MoveTowards(transform.position, m_targetPos, m_speed * Time.deltaTime);
         }
-        else
+
+        if(!FindObjectOfType<Player>().m_forcefield.activeSelf && !m_isAttacking)
         {
-            if(!m_isDead)
-                StartCoroutine(Attack());
+            m_speed = 0.5f;
+            anim.SetInteger("Condition", 1);
         }
     }
     public void TakeDamage(int t_val)
@@ -75,6 +78,11 @@ public class Enemy : MonoBehaviour
         if (other.tag == "MainCamera")
         {
             m_isAttacking = true;
+            anim.SetInteger("Condition", 2);
+        }
+        if (other.tag == "Shield")
+        {
+            m_speed = 0;
             anim.SetInteger("Condition", 0);
         }
     }
@@ -90,6 +98,24 @@ public class Enemy : MonoBehaviour
             TakeDamage(100);
         }
     }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.tag == "MainCamera")
+        {
+            StartCoroutine(Attack());
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "MainCamera")
+        {
+            m_isAttacking = false;
+            anim.SetInteger("Condition", 1);
+        }
+    }
+
     public void Die()
     {
         m_isDead = true;
@@ -137,6 +163,6 @@ public class Enemy : MonoBehaviour
     {
         anim.SetInteger("Condition", 2);
         yield return new WaitForSeconds(2.0f);
-        FindObjectOfType<Player>().TakeDamage(0.01f);
+        FindObjectOfType<Player>().TakeDamage(0.02f);
     }
 }
