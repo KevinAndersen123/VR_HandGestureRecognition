@@ -62,13 +62,13 @@ public class Enemy : MonoBehaviour
             m_speed = 0.5f;
             anim.SetInteger("Condition", 1);
         }
+ 
     }
     public void TakeDamage(int t_val)
     {
         m_health -= t_val;
         if(m_health <= 0)
         {
-            Debug.Log("HIT ENEMY!");
             Die();
         }
     }

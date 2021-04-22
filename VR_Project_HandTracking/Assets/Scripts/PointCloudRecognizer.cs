@@ -135,7 +135,7 @@ namespace PDollarGestureRecognizer
             {
                 int index = -1;
                 float minDistance = float.MaxValue;
-                for(int j = 0; j < n; j++)
+                for (int j = 0; j < n; j++)
                     if (!matched[j])
                     {
                         float dist = Geometry.SqrEuclideanDistance(points1[i], points2[j]);  // use squared Euclidean distance to save some processing time
@@ -145,7 +145,10 @@ namespace PDollarGestureRecognizer
                             index = j;
                         }
                     }
-                matched[index] = true; // point index from the 2nd cloud is matched to point i from the 1st cloud
+                if (index != -1)
+                {
+                    matched[index] = true; // point index from the 2nd cloud is matched to point i from the 1st cloud
+                }
                 float weight = 1.0f - ((i - startIndex + n) % n) / (1.0f * n);
                 sum += weight * minDistance; // weight each distance with a confidence coefficient that decreases from 1 to 0
                 i = (i + 1) % n;

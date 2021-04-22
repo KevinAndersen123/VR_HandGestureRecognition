@@ -22,12 +22,34 @@ public class WaveManager : MonoBehaviour
     public float m_roundDelay;
     public int m_enemyIncreaseFactor;
     public GameObject m_enemyPrefab;
-
+    float m_uiTime = 2.5f;
+    bool m_showUi = true;
     public void Start()
     {
         m_manager = GetComponent<GameManager>();
         m_timer = GetComponent<Timer>();
         m_ui = GetComponent<WaveUI>();
+    }
+
+    private void Update()
+    {
+        if (m_showUi)
+        {
+            GetComponent<WaveUI>().UpdateUI(m_currentWave, m_enemiesInWave);
+            if (m_uiTime > 0)
+            {
+                m_uiTime -= Time.deltaTime;
+            }
+            else
+            {
+                m_showUi = false;
+                m_uiTime = 2.5f;
+            }
+        }
+        else
+        {
+            GetComponent<WaveUI>().HideUi();
+        }
     }
 
     public void StartWave()
@@ -41,9 +63,9 @@ public class WaveManager : MonoBehaviour
         {
             m_spawnDelay = 3;
         }
-        m_enemiesInWave = m_enemyIncreaseFactor * m_currentWave; // may change
+        m_enemiesInWave = m_enemyIncreaseFactor * m_currentWave;
         m_enemiesToSpawn = m_enemiesInWave;
-        GetComponent<WaveUI>().UpdateUI(m_currentWave, m_enemiesInWave);
+        m_showUi = true;
         StartCoroutine(Spawn());
     }
 
@@ -55,7 +77,6 @@ public class WaveManager : MonoBehaviour
             {
                 break;
             }
-
             Instantiate(m_enemyPrefab, GetRandownSpawner(), Quaternion.identity);
             yield return new WaitForSeconds(m_spawnDelay);
         }
@@ -69,8 +90,8 @@ public class WaveManager : MonoBehaviour
     public void EnemyDied()
     {
         m_enemiesInWave--;
-        m_ui.UpdateUI(m_currentWave, m_enemiesInWave);
-        if(m_enemiesInWave == 0)
+        m_showUi = true;
+        if (m_enemiesInWave == 0)
         {
             EndWave();
         }

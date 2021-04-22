@@ -11,7 +11,7 @@ public class WaveUI : MonoBehaviour
     public void UpdateUI(int t_currentWave, int t_enemiesLeft)
     {
         m_waveText.text = "Wave " + t_currentWave.ToString();
-        m_enemyText.text = t_enemiesLeft.ToString() + " Enemies Left";
+        m_enemyText.text = "Enemies Left: " + t_enemiesLeft.ToString();
     }
 
     public void HideUi()

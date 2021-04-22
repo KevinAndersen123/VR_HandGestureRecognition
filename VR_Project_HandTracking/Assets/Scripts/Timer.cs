@@ -50,7 +50,7 @@ public class Timer : MonoBehaviour
     {
         if(m_timerVal <=1.0f)
         {
-            m_timerText.text = "Start";
+            m_timerText.text = "For Odin!";
         }
         else
         {
