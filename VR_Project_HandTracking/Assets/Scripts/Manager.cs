@@ -27,13 +27,4 @@ public class Manager : MonoBehaviour
     {
         Application.Quit();
     }
-
-    private void Update()
-    {
-        //if(Input.GetKeyDown(KeyCode.Space))
-        //{
-        //    FindObjectOfType<LevelChanger>().FadeToLevel("Gameplay");
-        //}
-    }
-
 }

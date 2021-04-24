@@ -8,30 +8,6 @@ namespace PDollarGestureRecognizer
 {
     public class GestureIO
     {
-        /// <summary>
-        /// Reads a multistroke gesture from an XML file
-        /// </summary>
-        /// <param name="xml"></param>
-        /// <returns></returns>
-		public static Gesture ReadGestureFromXML(string xml) {
-
-			XmlTextReader xmlReader = null;
-			Gesture gesture = null;
-
-			try {
-
-				xmlReader = new XmlTextReader(new StringReader(xml));
-				gesture = ReadGesture(xmlReader);
-
-			} finally {
-
-				if (xmlReader != null)
-					xmlReader.Close();
-			}
-
-			return gesture;
-		}
-
 		/// <summary>
 		/// Reads a multistroke gesture from an XML file
 		/// </summary>
