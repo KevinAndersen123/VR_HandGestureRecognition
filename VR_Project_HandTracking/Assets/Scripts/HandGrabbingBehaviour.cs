@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using OculusSampleFramework;
 
-//@Author: Kevin Andersen
 public class HandGrabbingBehaviour : OVRGrabber
 {
     private OVRHand m_hand;

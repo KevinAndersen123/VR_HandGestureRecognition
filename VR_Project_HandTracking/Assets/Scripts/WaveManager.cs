@@ -52,6 +52,8 @@ public class WaveManager : MonoBehaviour
         }
     }
 
+    //starts the coroutine to spawn the enemies
+    //changes value of the delay if at certain wave number
     public void StartWave()
     {
         m_currentWave++;
@@ -69,6 +71,7 @@ public class WaveManager : MonoBehaviour
         StartCoroutine(Spawn());
     }
 
+    //instantiates the enemy prefab
     IEnumerator Spawn()
     {
         for (int i =0; i < m_enemiesToSpawn; i++)
@@ -87,6 +90,7 @@ public class WaveManager : MonoBehaviour
         m_timer.StartTimer(m_roundDelay);
     }
 
+    //decreses the number of enemies needed to end wave
     public void EnemyDied()
     {
         m_enemiesInWave--;
@@ -96,12 +100,12 @@ public class WaveManager : MonoBehaviour
             EndWave();
         }
     }
-
+    //get a random spawn location
     public Vector3 GetRandownSpawner()
     {
         return m_spawners[Random.Range(0, m_spawners.Count)].transform.position;
     }
-
+    //gets the current wave number
     public int GetCurrentWave()
     {
         return m_currentWave;

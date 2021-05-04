@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
 using System;
+//@Author: Kevin Andersen
 
 // Gesture struct
 [System.Serializable]

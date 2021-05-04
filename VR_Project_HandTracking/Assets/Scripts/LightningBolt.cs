@@ -37,6 +37,7 @@ public class LightningBolt : MonoBehaviour
         }
     }
 
+    //checks if collided with anything other than itself
     public void OnCollisionEnter(Collision t_col)
     {
         if(t_col.gameObject.tag != "Lightning" && !m_collided)
